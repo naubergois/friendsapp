@@ -17,6 +17,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".AddActivity" android:parentActivityName=".MainActivity"
+            android:label="Add Friend"/>
+        <activity android:name=".EditActivity" android:parentActivityName=".MainActivity"
+            android:label="Edit Friend"/>
+        <activity android:name=".SearchActivity" android:parentActivityName=".MainActivity"
+            android:label="Search Friend"/>
         <provider
             android:authorities="br.nauber.friends.provider"
             android:name="br.nauber.friends.FriendsProvider"

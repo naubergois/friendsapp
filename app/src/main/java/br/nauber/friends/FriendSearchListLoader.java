@@ -14,20 +14,17 @@ import java.util.List;
 /**
  * Created by naubergois on 5/26/16.
  */
-public class FriendListLoader extends AsyncTaskLoader<List<Friend>> {
-
-
+public class FriendSearchListLoader extends AsyncTaskLoader<List<Friend>> {
     private static final String TAG = FriendListLoader.class.getSimpleName();
 
     private List<Friend> mFriends;
     private ContentResolver contentResolver;
     private Cursor mCursor;
+    private String mFilterText;
 
-    public FriendListLoader(Context context, Uri uri, ContentResolver contentResolver) {
-
-
+    public FriendSearchListLoader(Context context, Uri uri, ContentResolver contentResolver,String mFilterText) {
         super(context);
-        Log.d(TAG, "Constructor");
+        this.mFilterText=mFilterText;
 
         this.contentResolver = contentResolver;
 
@@ -49,8 +46,6 @@ public class FriendListLoader extends AsyncTaskLoader<List<Friend>> {
 
     @Override
     public void deliverResult(List<Friend> data) {
-
-        Log.d(TAG, "deliver Result");
 
         if (isReset()) {
             if (data != null) {
@@ -75,16 +70,11 @@ public class FriendListLoader extends AsyncTaskLoader<List<Friend>> {
 
     @Override
     protected void onStartLoading() {
-
-        Log.d(TAG, "onStartLoading");
         if (mFriends!=null)
         {
-            Log.d(TAG, "before deliver result");
             deliverResult(mFriends);
         }
         if (takeContentChanged()||(mFriends==null)){
-
-            Log.d(TAG, "before force loading");
             forceLoad();
         }
 
@@ -92,11 +82,10 @@ public class FriendListLoader extends AsyncTaskLoader<List<Friend>> {
 
     @Override
     public List<Friend> loadInBackground() {
-
-        Log.d(TAG, "Load BackGround");
         String[] projection = {BaseColumns._ID, FriendsContract.FriendsColumns.FRIENDS_NAME, FriendsContract.FriendsColumns.FRIENDS_PHONE, FriendsContract.FriendsColumns.FRIENDS_EMAIL};
         List<Friend> entries = new ArrayList<Friend>();
-        mCursor = contentResolver.query(FriendsContract.URI_TABLE, projection, null, null, null);
+        String selection= FriendsContract.FriendsColumns.FRIENDS_NAME+ " LIKE '%"+mFilterText+"%'";
+        mCursor = contentResolver.query(FriendsContract.URI_TABLE, projection, selection, null, null);
         if (mCursor != null) {
             if (mCursor.moveToFirst()) {
                 do {
@@ -112,7 +101,6 @@ public class FriendListLoader extends AsyncTaskLoader<List<Friend>> {
 
             }
         }
-        this.mFriends=entries;
         return entries;
     }
 }

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity">
+
+    <item
+        android:id="@+id/search"
+        android:icon="@android:drawable/ic_menu_search"
+        android:orderInCategory="10"
+        android:title="Search"
+        app:showAsAction="always" />
+
+
+    <item
+        android:id="@+id/add"
+        android:icon="@android:drawable/ic_menu_add"
+        android:orderInCategory="100"
+        android:title="Add"
+        app:showAsAction="always"
+        tools:ignore="AppCompatResource" />
+
+
+    <item
+        android:id="@+id/deleteDatabase"
+        android:orderInCategory="50"
+        android:title="Delete Database"
+        app:showAsAction="never"
+        tools:ignore="AppCompatResource" />
+
+
+</menu>
